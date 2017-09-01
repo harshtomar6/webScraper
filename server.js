@@ -1,7 +1,8 @@
 let express = require("express");
 let app = express();
 let bodyParser = require("body-parser");
-let route = require('./api/routes/router');
+let apiRoute = require('./api/routes/router');
+let homeRoute = require('./api/routes/homeRoute');
 
 //Set Port
 const port = process.env.PORT || 3638;
@@ -17,7 +18,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 //All requests to http://localhost:3638/api/
-app.use('/api', route);
+app.use('/api', apiRoute);
+app.use('/', homeRoute);
 
 //Make the server to listen on specified port
 app.listen(port, function(){
