@@ -1,6 +1,7 @@
 let express = require('express')
 let router = express.Router()
 var request = require("./../controllers/request.js");
+let db = require('./../models/db')
 
 //Allow cross domain access
 router.use(function(req, res, next) {
@@ -8,6 +9,15 @@ router.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+router.get('/banner', (req, res, next) => {
+  db.getBannerData((err, doc) => {
+    if(err)
+      res.send(err)
+    else
+      res.send(doc)
+  })
+})
 
 //Responds homepage data
 router.get('/', function(req, res, next){

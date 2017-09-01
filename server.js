@@ -1,11 +1,15 @@
 let express = require("express");
 let app = express();
 let bodyParser = require("body-parser");
+let mongoose = require('mongoose');
 let apiRoute = require('./api/routes/router');
 let homeRoute = require('./api/routes/homeRoute');
 
 //Set Port
 const port = process.env.PORT || 3638;
+
+//Connect to database server
+mongoose.connect('mongodb://localhost:27017/test')
 
 //View engine to ejs, just for testing purpose
 app.set('view engine', 'ejs');
@@ -25,5 +29,3 @@ app.use('/', homeRoute);
 app.listen(port, function(){
     console.log("Server is live at port "+port);
 });
-
-module.exports = app;
