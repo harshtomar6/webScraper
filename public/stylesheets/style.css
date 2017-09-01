@@ -1,0 +1,15 @@
+body{
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.container{
+    margin-top: 70px;
+}
+.thumbnail{
+    width: 163px;
+    height: 242px;
+}
+
+.movie-card{
+    cursor: pointer;
+}

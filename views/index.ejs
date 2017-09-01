@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Search Abstraction Layer</title>
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/style.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<% for(var i=0;i<data.length;i++){ %>
+				<div class="col-xs-6 col-md-2 col-sm-3">
+					<p class="movie-card" onclick="playMovie('<%= data[i].movie %>')">
+						<img class="img-responsive thumbnail" src="<%= data[i].thumbnail %>">
+					</p>
+				</div>
+			<% } %>	
+		</div>
+
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+
+		function playMovie(data){
+			$.post('/play-movie', {"movie-url":data}, function(success){
+				success = JSON.parse(success);
+
+				window.location.href = "/watch/"+success.data;
+			})
+		}
+
+	</script>
+</body>
+</html>
