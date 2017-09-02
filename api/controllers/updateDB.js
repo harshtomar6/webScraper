@@ -1,9 +1,10 @@
 let db = require('./../models/db.js')
+let mongoose = require('mongoose')
 
-db.saveBannerData('https://cmovieshd.com/cmovieshd', (err) => {
+mongoose.Promise = require('bluebird')
+mongoose.connect('mongodb://localhost:27017/movies')
 
-  console.log("Well this is working")
-
+db.saveAllMoviesData('https://cmovieshd.com/movies/page-6', (err) => {
   if(err)
     console.log(err)
   else {

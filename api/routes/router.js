@@ -10,40 +10,29 @@ router.use(function(req, res, next) {
   next();
 });
 
-router.get('/banner', (req, res, next) => {
-  db.getBannerData((err, doc) => {
-    if(err)
-      res.send(err)
-    else
-      res.send(doc)
-  })
-})
-
 //Responds homepage data
 router.get('/', function(req, res, next){
     var final_data = {"err": null, "body": {"top_data": null, "content": null}}
 
     //Top banner data
-    request.getTopData('http://cmovieshd.com/cmovieshd', function(data){
-        if(!data.err){
-            final_data.body.top_data = data.body;
+    db.getBannerData((err, doc) => {
+      if(err){
+          final_data.err = err
+          res.send(final_data)
+      }
+      else{
+          final_data.body.top_data = doc
 
-            //Content Data
-            request.getData('http://cmovieshd.com/cmovieshd', function(data1){
-                if(!data1.err){
-                    final_data.body.content = data1.body;
-                }else{
-                    final_data.err = data1.err
-                }
-                console.log(final_data)
-                res.send(final_data)
-            })
-        }
-        else{
-            final_data.err = data.err
-            console.log(final_data)
-            res.send(final_data)
-        }
+          db.getHomepageData((err, doc2) => {
+            if(err){
+              final_data.err = err
+              res.send(final_data)
+            }else{
+              final_data.body.content = doc2
+              res.send(final_data)
+            }
+          })
+      }
     })
 });
 
@@ -100,9 +89,9 @@ router.post('/search-movie', function(req, res, next){
 
 //Responds data for all movie tab
 router.get('/all-movies', function(req, res, next){
-    request.getData('http://cmovieshd.com/movies/', function(data){
-        console.log(data)
-        res.send(data)
+    db.getAllMoviesData((err, doc) => {
+      if(!err)
+        res.send(doc)
     })
 })
 
