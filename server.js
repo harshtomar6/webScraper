@@ -9,7 +9,8 @@ let homeRoute = require('./api/routes/homeRoute');
 const port = process.env.PORT || 3638;
 
 //Connect to database server
-mongoose.connect('mongodb://localhost:27017/test')
+mongoose.Promise = require('bluebird')
+mongoose.connect('mongodb://heroku_r8wtvrh7:pp030v603cv137akko853r4ijp@ds119014.mlab.com:19014/heroku_r8wtvrh7')
 
 //View engine to ejs, just for testing purpose
 app.set('view engine', 'ejs');
