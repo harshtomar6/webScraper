@@ -4,13 +4,14 @@ let bodyParser = require("body-parser");
 let mongoose = require('mongoose');
 let apiRoute = require('./api/routes/router');
 let homeRoute = require('./api/routes/homeRoute');
+let config = require('./config')
 
 //Set Port
 const port = process.env.PORT || 3638;
 
 //Connect to database server
 mongoose.Promise = require('bluebird')
-mongoose.connect('mongodb://heroku_r8wtvrh7:pp030v603cv137akko853r4ijp@ds119014.mlab.com:19014/heroku_r8wtvrh7')
+mongoose.connect(config.DATABASE_URI)
 
 //View engine to ejs, just for testing purpose
 app.set('view engine', 'ejs');

@@ -1,8 +1,9 @@
 let db = require('./../models/db.js')
 let mongoose = require('mongoose')
+let config = require('./../../config')
 
 mongoose.Promise = require('bluebird')
-mongoose.connect('mongodb://heroku_r8wtvrh7:pp030v603cv137akko853r4ijp@ds119014.mlab.com:19014/heroku_r8wtvrh7')
+mongoose.connect(config.DATABASE_URI)
 
 db.getBannerData((err, doc) => {
   if(err)
