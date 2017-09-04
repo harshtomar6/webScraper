@@ -9,6 +9,7 @@
   },
   "author": "harsh tomar",
   "license": "ISC",
+  "repository": "https://github.com/harshtomar6/webScraper.git",
   "dependencies": {
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
@@ -19,6 +20,7 @@
     "jquery": "^3.2.1",
     "mongodb": "^2.2.26",
     "mongoose": "^4.11.9",
+    "passport": "^0.4.0",
     "request": "^2.81.0"
   }
 }
