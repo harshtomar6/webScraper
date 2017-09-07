@@ -87,8 +87,15 @@ router.post('/search-movie', function(req, res, next){
     })
 })
 
+//test
+router.get('/ajax', (req, res, next) => {
+
+  res.send(request.getURIName('https://cmovieshd.com/tv-series/game-of-thrones-season-3/'))
+
+})
+
 //Responds data for all movie tab
-router.get('/all-movies', function(req, res, next){
+router.get('/all-movies', function(req, res, next){https://cmovieshd.com/tv-series/game-of-thrones-season-3/
     db.getAllMoviesData((err, doc) => {
       if(!err)
         res.send(doc)

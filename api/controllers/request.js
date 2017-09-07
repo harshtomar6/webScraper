@@ -14,15 +14,15 @@ var getTopData = function(url, callback){
     if(!err && res.statusCode === 200){
 
       var $ = cheerio.load(body);
-  
-      $('.swiper-slide', 'div .swiper-wrapper').each(function(){    
+
+      $('.swiper-slide', 'div .swiper-wrapper').each(function(){
         var style = $(this).attr('style');
-    
+
         style = style.split('(')[1];
         style = style.substr(0, style.length-2);
-        
+
         movie_banner.push(style);
-      })     
+      })
 
       $('.slide-link', 'div .swiper-slide').each(function(){
         movie_link.push($(this).attr('href'))
@@ -33,7 +33,7 @@ var getTopData = function(url, callback){
         movie_desc.push($(this).text())
       })
 
-      for(var i=0;i<movie_link.length;i++)  
+      for(var i=0;i<movie_link.length;i++)
         data.push({
           "top_banner": movie_banner[i],
           "top_link": movie_link[i],
@@ -71,7 +71,7 @@ var getData = function(url, callback){
         metaLink.push($(this).attr('rel'))
         title.push($(this).attr('title'));
       });
-      
+
       $('img', 'div .ml-item').each(function(){
         var img = $(this).attr('data-original');
         pages.push(img);
@@ -79,23 +79,23 @@ var getData = function(url, callback){
 
       $('.mli-eps, .mli-quality', 'div .ml-item').each(function(){
         var episode = $(this).text()
-          
+
         meta.push({"episode":episode});
       });
-      
-      
+
+
 
       for(var i=0;i<links.length;i++)
         data.push({
           "meta": meta[i],
           "thumbnail": pages[i],
-          "watch": watchlinks[i], 
-          "movie": links[i], 
+          "watch": watchlinks[i],
+          "movie": links[i],
           "name": title[i]
         });
-              
+
       final_data.body = data;
-          
+
     }else {
       final_data.err = err;
     }
@@ -129,7 +129,7 @@ var getMetaData = function(url, callback){
   var imdb_rating, year=[], data = [];
 
   request(url, function(err, res, body){
-    if(!err && res.statusCode === 200){ 
+    if(!err && res.statusCode === 200){
       var $ = cheerio.load(body)
 
       $('.jt-imdb', 'div').each(function(){
@@ -194,7 +194,7 @@ var getSearchResults = function(query, callback){
     if(!err && res.statusCode === 200){
 
       var $ = cheerio.load(body);
-      
+
       $('a', 'div .ml-item').each(function(){
         var link = $(this).attr('href');
         links.push(link);
@@ -208,14 +208,14 @@ var getSearchResults = function(query, callback){
 
       $('.mli-eps, .mli-quality', 'div .ml-item').each(function(){
         var episode = $(this).text()
-          
+
         meta.push(episode);
       });
 
       for(var i=0;i<links.length;i++)
         data.push({
-          "thumbnail": pages[i], 
-          "watch": links[i], 
+          "thumbnail": pages[i],
+          "watch": links[i],
           "meta": meta[i],
           "name": title[i]
         })
@@ -263,7 +263,7 @@ var getEpisodesData = function(url, callback){
 }
 
 var getMovieData = function(url, callback){
-  
+
   var final_data = {
     'err': null,
     'body': null
@@ -287,11 +287,11 @@ var getMovieData = function(url, callback){
       var $ = cheerio.load(body);
 
       $('a', '#mv-info').each(function(){
-        
+
         var style = $(this).attr('style');
         style = style.split('(')[1];
         style = style.substr(0, style.length-1);
-        
+
         movie_title.push($(this).attr('title'));
         movie_banner.push(style);
 
@@ -301,7 +301,7 @@ var getMovieData = function(url, callback){
         var text = $(this).text();
 
         var t2 = text.replace(', broadcast at CMOVIESHD.COM', ' ')
-        
+
         movie_des.push(t2)
       })
 
@@ -326,25 +326,25 @@ var getMovieData = function(url, callback){
 
       for(var i=3;i<temp.length;i++)
         meta.cast.push(temp[i]);
-      
+
       meta.imdb = $('imdb', '.nopadding').text()
       meta.duration = $('time', '.nopadding').text()
       meta.quality = $('.quality', '.nopadding').text()
       meta.release = $('meta', '.nopadding').attr('content')
-      
+
       getData(url, function(success){
         console.log(data)
 
         for(var i=0;i<movie_title.length;i++)
         data.push({
-          "movie-title": movie_title[i], 
-          "movie-des": movie_des[i], 
+          "movie-title": movie_title[i],
+          "movie-des": movie_des[i],
           "movie-banner": movie_banner[i],
           "play-link": url+'watch/',
           "meta": meta,
           "similar-movies": success.body
         })
-      
+
         final_data.body = data;
 
         callback(final_data)
@@ -354,11 +354,57 @@ var getMovieData = function(url, callback){
   })
 }
 
+var getAjaxData = (movie_name, callback) => {
+
+  let final_data = {
+    err: null,
+    body: {
+      imdb: null
+    }
+  }
+
+  request.get('https://cmovieshd.com/ajax/movie_qtip/'+movie_name, (err, res, body) => {
+    if(!err && res.statusCode === 200){
+      var $ = cheerio.load(body)
+
+      var data = []
+
+      $('.jt-info').each(function(){
+        data.push($(this).text())
+      })
+
+      final_data.body.imdb = data[0].split(' ')[1]
+      final_data.body.year = data[1]
+      final_data.body.duration = data[2]
+      final_data.body.quality = data[4]
+
+      final_data.body.description = $('.f-desc').text()
+
+      $('.block').each(function(){
+        data.push($(this).text())
+      })
+
+      final_data.body.released = data[5].split(':')[1]
+      final_data.body.country = data[6].split('\t')[2]
+      var genre = data[7].split('\t')[2]
+      final_data.body.genre = genre.split(',')
+
+      callback(final_data)
+    }
+  })
+}
+
+var getURIName = (str) => {
+  return str.split('/')[4]
+}
+
 module.exports = {
-                  getData: getData, 
-                  getMovieData: getMovieData, 
-                  getPlayableMovie: getPlayableMovie, 
-                  getSearchResults: getSearchResults, 
-                  getTopData: getTopData,
-                  getEpisodesData: getEpisodesData
+                  getData: getData,
+                  getMovieData,
+                  getPlayableMovie,
+                  getSearchResults,
+                  getTopData,
+                  getEpisodesData,
+                  getAjaxData,
+                  getURIName
                  }

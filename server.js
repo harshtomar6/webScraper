@@ -2,9 +2,9 @@ let express = require("express");
 let app = express();
 let bodyParser = require("body-parser");
 let mongoose = require('mongoose');
-let apiRoute = require('./api/routes/router');
+let apiRoute = require('./api/routes/apiRoute');
 let homeRoute = require('./api/routes/homeRoute');
-let config = require('./config')
+let config = require('./config/config')
 
 //Set Port
 const port = process.env.PORT || 3638;

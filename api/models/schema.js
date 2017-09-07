@@ -18,10 +18,38 @@ let homepageSchema = new Schema({
 
 let allMoviesSchema = new Schema({
   name: String,
-  description: String,
+  infoLink: String,
   image: String,
   watchLink: String,
-  meta: Object
+  meta: {
+      episode: String,
+      imdb: String,
+      year: String,
+      duration: String,
+      quality: String,
+      description: String,
+      released: String,
+      country: String,
+      genre: Array
+  }
 })
 
-module.exports = {bannerSchema, homepageSchema, allMoviesSchema}
+let tvSeriesSchema = new Schema({
+  name: String,
+  infoLink: String,
+  image: String,
+  watchLink: String,
+  meta: {
+      episode: String,
+      imdb: String,
+      year: String,
+      duration: String,
+      quality: String,
+      description: String,
+      released: String,
+      country: String,
+      genre: Array
+  }
+})
+
+module.exports = {bannerSchema, homepageSchema, allMoviesSchema, tvSeriesSchema}

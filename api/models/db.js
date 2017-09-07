@@ -6,6 +6,8 @@ const request = require('./../controllers/request')
 var Banner = mongoose.model('Banner', Schema.bannerSchema)
 var Homepage = mongoose.model('Homepage', Schema.homepageSchema)
 var AllMovies = mongoose.model('AllMovies', Schema.allMoviesSchema)
+var TvSeries = mongoose.model('TvSeries', Schema.tvSeriesSchema)
+
 
 //Save Data functions
 var saveBannerData = (url, callback) => {
@@ -57,18 +59,31 @@ var saveAllMoviesData = (url, callback) => {
   request.getData(url, function(data){
       if(!data.err){
         data.body.forEach((arr) => {
-          var allMovies = new AllMovies({
-            name: arr.name,
-            description: arr.movie,
-            image: arr.thumbnail,
-            watchLink: arr.watch,
-            meta:{
-              episode: arr.meta.episode
-            }
-          })
 
-          allMovies.save((err) => {
-            callback(err)
+          request.getAjaxData(request.getURIName(arr.watch), function(data){
+            if(!data.err){
+              var allmovies = new AllMovies({
+                name: arr.name,
+                infoLink: arr.watch,
+                image: arr.thumbnail,
+                watchLink: arr.movie,
+                meta: {
+                  episode: arr.meta.episode,
+                  imdb: data.body.imdb,
+                  year: data.body.year,
+                  duration: data.body.duration,
+                  quality: data.body.quality,
+                  description: data.body.description,
+                  released: data.body.released,
+                  country: data.body.country,
+                  genre: data.body.genre
+                }
+              })
+
+              allmovies.save((err) => {
+                callback(err)
+              })
+            }
           })
 
         })
