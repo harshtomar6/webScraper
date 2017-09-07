@@ -90,7 +90,9 @@ router.post('/search-movie', function(req, res, next){
 //test
 router.get('/ajax', (req, res, next) => {
 
-  res.send(request.getURIName('https://cmovieshd.com/tv-series/game-of-thrones-season-3/'))
+  request.getAjaxData('empire-of-the-ants', (data) => {
+    res.send(data)
+  })
 
 })
 

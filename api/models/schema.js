@@ -52,4 +52,9 @@ let tvSeriesSchema = new Schema({
   }
 })
 
-module.exports = {bannerSchema, homepageSchema, allMoviesSchema, tvSeriesSchema}
+let listSchema = new Schema({
+  list_name: String,
+  contents: allMoviesSchema
+})
+
+module.exports = {bannerSchema, homepageSchema, allMoviesSchema, tvSeriesSchema, listSchema}
