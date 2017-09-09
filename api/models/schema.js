@@ -53,7 +53,7 @@ let tvSeriesSchema = new Schema({
 })
 
 let listSchema = new Schema({
-  list_name: String,
+  listName: String,
   contents: allMoviesSchema
 })
 

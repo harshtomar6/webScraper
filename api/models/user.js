@@ -4,19 +4,23 @@ let bcrypt = require('bcrypt-nodejs')
 //Define User Schema
 var userSchema  = mongoose.Schema({
   local: {
+    firstName: String,
+    lastName: String,
     email: String,
     password: String
   },
-  facebook: {
+  google: {
     id: String,
     token: String,
+    firstName: String,
+    lastName: String,
     email: String,
     name: String
   }
 })
 
 //Define methods to generate hash
-userSchema.methods.generateHast = (password) => {
+userSchema.methods.generateHash = (password) => {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
 }
 
@@ -26,4 +30,4 @@ userSchema.methods.validatePassword = (password) => {
 }
 
 //create model and export it
-methods.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema)

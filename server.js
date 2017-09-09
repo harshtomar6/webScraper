@@ -4,6 +4,7 @@ let bodyParser = require("body-parser");
 let mongoose = require('mongoose');
 let apiRoute = require('./api/routes/apiRoute');
 let homeRoute = require('./api/routes/homeRoute');
+let userRoute = require('./api/routes/userRoute');
 let config = require('./config/config')
 
 //Set Port
@@ -23,9 +24,10 @@ app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-//All requests to http://localhost:3638/api/
+//All different routes
 app.use('/api', apiRoute);
 app.use('/', homeRoute);
+app.use('/user', userRoute);
 
 //Make the server to listen on specified port
 app.listen(port, function(){
