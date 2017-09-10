@@ -8,14 +8,6 @@ let bannerSchema = new Schema({
   watchLink: String
 })
 
-let homepageSchema = new Schema({
-  name: String,
-  description: String,
-  image: String,
-  watchLink: String,
-  meta: Object
-})
-
 let allMoviesSchema = new Schema({
   name: String,
   infoLink: String,
@@ -54,7 +46,12 @@ let tvSeriesSchema = new Schema({
 
 let listSchema = new Schema({
   listName: String,
-  contents: allMoviesSchema
+  content: Array
+})
+
+let homepageSchema = new Schema({
+  listName: String,
+  content: Array
 })
 
 module.exports = {bannerSchema, homepageSchema, allMoviesSchema, tvSeriesSchema, listSchema}

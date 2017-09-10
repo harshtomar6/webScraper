@@ -35,27 +35,13 @@ var saveBannerData = (url, callback) => {
 }
 
 //Save Homepage data function
-var saveHomepageData = (url, callback) => {
-  request.getData(url, (data) => {
-    if(!data.err){
-      data.body.forEach((arr) => {
-        var homepage = new Homepage({
-                                    name: arr.name,
-                                    description: arr.movie,
-                                    image: arr.thumbnail,
-                                    watchLink: arr.watch,
-                                    meta:{
-                                      episode: arr.meta.episode
-                                    }
-                                  })
+var saveHomepageData = (callback) => {
+  List.find({"listName":"Movies with IMDB rating 8.7"}, (err, doc) => {
+    var homepage = new Homepage({listName: doc[0].listName, content: doc[0].content})
 
-        homepage.save((err) => {
-          callback(err)
-        })
-      })
-    }else{
-      callback(data.err)
-    }
+    homepage.save(err => {
+      callback(err)
+    })
   })
 }
 
@@ -98,6 +84,15 @@ var saveAllMoviesData = (url, callback) => {
   })
 }
 
+//Create new List function
+var createNewList = (data, callback) => {
+  var list = new List(data)
+
+  list.save((err) => {
+    callback(err)
+  })
+}
+
 //Get Banner Data Functions
 var getBannerData = (callback, limit) => {
   Banner
@@ -109,7 +104,7 @@ var getBannerData = (callback, limit) => {
 
 //Get homepage Data function
 var getHomepageData = (callback) => {
-  Homepage.find({}, 'name description image watchLink meta', (err, d) => {
+  Homepage.find({}, (err, d) => {
     callback(err, d)
   })
 }
@@ -133,6 +128,13 @@ var updateBannerData = (callback) => {
   callback()
 }
 
+//get List function
+var getList = (name, callback) => {
+  List.find({name: name}, (err, doc) => {
+    callback(err, doc)
+  })
+}
+
 var registerUser = (data, callback) => {
   var user = new User()
 
@@ -149,6 +151,8 @@ var registerUser = (data, callback) => {
 
 //Export different function
 module.exports = {
+                  AllMovies,
+                  List,
                   saveBannerData,
                   getBannerData,
                   saveHomepageData,
@@ -156,5 +160,7 @@ module.exports = {
                   saveAllMoviesData,
                   getAllMoviesData,
                   updateBannerData,
-                  registerUser
+                  registerUser,
+                  createNewList,
+                  getList
                 }
