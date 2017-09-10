@@ -341,6 +341,7 @@ var getMovieData = function(url, callback){
           "movie-des": movie_des[i],
           "movie-banner": movie_banner[i],
           "play-link": url+'watch/',
+          "streamango": url+'watch/streamango-0.html',
           "meta": meta,
           "similar-movies": success.body
         })

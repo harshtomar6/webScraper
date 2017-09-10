@@ -8,9 +8,9 @@ mongoose.connect(config.DATABASE_URI)
 pages_list = []
 
 URI = 'https://cmovieshd.com/movies/page-'
-currentPage = 61
+currentPage = 421
 
-for(var i=currentPage;i<=70;i++){
+for(var i=currentPage;i<=423;i++){
   pages_list.push(URI+currentPage+'/')
   currentPage++;
 }
