@@ -137,8 +137,7 @@ var registerUser = (data, callback) => {
   var user = new User()
 
   if(data.token === 'local'){
-    user.local.firstName = data.body.firstName
-    user.local.lastName = data.body.lastName
+    user.local.name = data.body.name
     user.local.email = data.body.email
     user.local.password = user.generateHash(data.body.password)
   }
