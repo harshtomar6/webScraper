@@ -59,6 +59,13 @@ router.post("/watch-movie", function(req, res, next){
         if(!data.err){
             final_data.body.content = data.body;
 
+            db.getMovieData(req.body['movie-name'], (err, doc) => {
+              if(err)
+                res.send(err)
+              else
+                final_data.body.content[0].playLink = doc.playLink
+            })
+
             //Get multiple episodes link for TV-series
             request.getEpisodesData(movie_url+'watch', function(data1){
                 if(!data1.err){

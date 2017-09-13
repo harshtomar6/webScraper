@@ -9,6 +9,7 @@ var Homepage = mongoose.model('Homepage', Schema.homepageSchema)
 var AllMovies = mongoose.model('AllMovies', Schema.allMoviesSchema)
 var TvSeries = mongoose.model('TvSeries', Schema.tvSeriesSchema)
 var List = mongoose.model('List', Schema.listSchema)
+var Fmovies = mongoose.model('Fmovies', Schema.fmoviesSchema)
 
 
 //Save Banner Data function
@@ -135,6 +136,12 @@ var getList = (name, callback) => {
   })
 }
 
+var getMovieData = (name, callback) => {
+  AllMovies.findOne({name: name}, (err, doc) => {
+    callback(err, doc)
+  })
+}
+
 var registerUser = (data, callback) => {
   var user = new User()
 
@@ -153,12 +160,14 @@ var registerUser = (data, callback) => {
 module.exports = {
                   AllMovies,
                   List,
+                  Fmovies,
                   saveBannerData,
                   getBannerData,
                   saveHomepageData,
                   getHomepageData,
                   saveAllMoviesData,
                   getAllMoviesData,
+                  getMovieData,
                   updateBannerData,
                   registerUser,
                   createNewList,

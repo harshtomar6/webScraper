@@ -25,11 +25,21 @@ var listData = {
   }
 })*/
 
-db.saveHomepageData(err => {
+
+db.Fmovies.find({}, (err, doc) => {
   if(err)
     console.log(err)
   else {
-    console.log("Homepage updated")
+
+    doc.forEach((d) => {
+      db.AllMovies.update({ "name": d.name },{"playLink": d.link}, (err) => {
+        if(err)
+          console.log(err)
+        else {
+          console.log("Updated")
+        }
+      })
+    })
+
   }
-  mongoose.connection.close()
 })
