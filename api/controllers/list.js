@@ -25,6 +25,24 @@ var listData = {
   }
 })*/
 
+/*db.Fmovies.find({}, (err, doc) => {
+  if(err)
+    console.log(err)
+  else{
+    data = []
+    doc.forEach(d => {
+      db.AllMovies.findOne({"name": d.name}, (err, m) => {
+        if(err)
+          console.log(err)
+          if(m !== null)
+            data.push(m)
+          console.log(data.length)
+
+      })
+    })
+  }
+})*/
+
 db.Fmovies.find({}, (err, doc) => {
   if(err)
     console.log(err)
