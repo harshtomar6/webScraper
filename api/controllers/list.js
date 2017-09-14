@@ -25,7 +25,6 @@ var listData = {
   }
 })*/
 
-
 db.Fmovies.find({}, (err, doc) => {
   if(err)
     console.log(err)
