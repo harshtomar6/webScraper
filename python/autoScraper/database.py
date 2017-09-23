@@ -34,6 +34,12 @@ class Database:
 
         return data
 
+    def find_in_banner(self):
+        banners = self.db['banners']
+
+        data = banners.find({})
+        return data
+
     def test(self):
         movies = self.db['allmovies']
 
