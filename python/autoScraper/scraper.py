@@ -44,7 +44,11 @@ class Scraper:
 
     def getThumbnail(self, link):
         thumbDiv = self.soup2.find('div', attrs={'class': 'thumb'})
-        urls = thumbDiv.findChildren()[0]['src']
+        try:
+            urls = thumbDiv.findChildren()[0]['src']
+        except:
+            print("1111")
+            imageUrl = 'notfound'
         imageUrl = urls.split('url=')[1]
         image = imageUrl+link.split('/')[4].split('.')[0]+'.jpg'
         
