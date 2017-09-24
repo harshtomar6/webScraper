@@ -37,7 +37,7 @@ var saveBannerData = (url, callback) => {
 
 //Save Homepage data function
 var saveHomepageData = (callback) => {
-  List.find({"listName":"Movies with IMDB rating 8.7"}, (err, doc) => {
+  List.find({"listName":"Best of Leonardo DiCaprio"}, (err, doc) => {
     var homepage = new Homepage({listName: doc[0].listName, content: doc[0].content})
 
     homepage.save(err => {

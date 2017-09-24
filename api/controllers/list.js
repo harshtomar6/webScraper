@@ -6,11 +6,11 @@ mongoose.Promise = require('bluebird')
 mongoose.connect(config.DATABASE_URI)
 
 var listData = {
-  listName: "Movies with IMDB rating 8.7",
+  listName: "Best of Leonardo DiCaprio",
   content: ''
 }
 
-/*db.AllMovies.find({"meta.imdb": "8.7"}, (err, doc) => {
+/*db.AllMovies.find({"meta.cast":{$in: [/Leonardo Dicaprio/i]}}, (err, doc) => {
   if(!err){
     listData.content = doc
     //console.log(listData)
