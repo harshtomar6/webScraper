@@ -103,6 +103,13 @@ var getBannerData = (callback, limit) => {
     })
 }
 
+//Get a single moovie from banner
+var getBannerMovie = (name, callback) => {
+  Banner.findOne({"name": name}, (err, doc) => {
+    callback(err, doc)
+  })
+}
+
 //Get homepage Data function
 var getHomepageData = (callback) => {
   Homepage.find({}, (err, d) => {
@@ -163,6 +170,7 @@ module.exports = {
                   Fmovies,
                   saveBannerData,
                   getBannerData,
+                  getBannerMovie,
                   saveHomepageData,
                   getHomepageData,
                   saveAllMoviesData,

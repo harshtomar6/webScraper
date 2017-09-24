@@ -52,36 +52,34 @@ router.post("/play-movie", function(req, res, next){
 
 //Responds movie description nad other meta deta
 router.post("/watch-movie", function(req, res, next){
-    var movie_url = req.body['movie-url'];
+    var movie_name = req.body['movie-name'];
+    var banner = req.body['banner']
     var final_data = {"err": null, "body": {"episodes": null, "content": null}}
 
-    request.getMovieData(movie_url, function(data){
-        if(!data.err){
-            final_data.body.content = data.body;
-
-            db.getMovieData(req.body['movie-name'], (err, doc) => {
-              if(err)
-                res.send(err)
-              else
-                final_data.body.content[0].playLink = doc.playLink
-            })
-
-            //Get multiple episodes link for TV-series
-            request.getEpisodesData(movie_url+'watch', function(data1){
-                if(!data1.err){
-                    final_data.body.episodes = data1.body;
-                }else{
-                    final_data.err = data1.err
-                }
-                res.send(final_data)
-            })
-            console.log(final_data)
+    if(banner){
+      db.getBannerMovie(movie_name, (err, doc) => {
+        if(err){
+          final_data.err = err
+          res.send(final_data)
+        }else{
+          final_data.err = null
+          final_data.body.content = doc
+          res.send(final_data)
         }
-        else{
-            final_data.err = data.err
-            res.send(final_data)
+
+      })
+    }else{
+      db.getMovieData(movie_name, (err, doc) => {
+        if(err){
+          final_data.err = err
+          res.send(final_data)
+        }else{
+          final_data.err = null
+          final_data.body.content = doc
+          res.send(final_data)
         }
-    })
+      })
+    }
 })
 
 //Responds data for a specified movie

@@ -25,6 +25,13 @@ var listData = {
   }
 })*/
 
+db.saveHomepageData((err, doc) => {
+    if(err)
+      console.log(err)
+    else
+      console.log("Homepage updated")
+})
+
 /*db.Fmovies.find({}, (err, doc) => {
   if(err)
     console.log(err)
@@ -43,7 +50,7 @@ var listData = {
   }
 })*/
 
-db.Fmovies.find({}, (err, doc) => {
+/*db.Fmovies.find({}, (err, doc) => {
   if(err)
     console.log(err)
   else {
@@ -59,4 +66,4 @@ db.Fmovies.find({}, (err, doc) => {
     })
 
   }
-})
+})*/
