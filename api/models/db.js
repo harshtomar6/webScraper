@@ -143,9 +143,17 @@ var getList = (name, callback) => {
   })
 }
 
+//Get single movie data
 var getMovieData = (name, callback) => {
   AllMovies.findOne({name: name}, (err, doc) => {
     callback(err, doc)
+  })
+}
+
+//Get search result
+var getSearchData = (query, callback) => {
+  AllMovies.find({name: {$regex: query, $options: 'i'}}, (err, docs) => {
+    callback(err, docs)
   })
 }
 
@@ -176,6 +184,7 @@ module.exports = {
                   saveAllMoviesData,
                   getAllMoviesData,
                   getMovieData,
+                  getSearchData,
                   updateBannerData,
                   registerUser,
                   createNewList,

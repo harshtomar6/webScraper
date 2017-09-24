@@ -92,13 +92,17 @@ router.post('/search-movie', function(req, res, next){
     })
 })
 
-//test
-router.get('/ajax', (req, res, next) => {
+//Responds ajax data for search
+router.post('/ajax-search', (req, res, next) => {
+  var query = req.body.query
 
-  request.getAjaxData('empire-of-the-ants', (data) => {
-    res.send(data)
+  db.getSearchData(query, (err, docs) => {
+    if(!err){
+      res.send({err: null, data: docs})
+    }else {
+      res.send({err: err, data: null})
+    }
   })
-
 })
 
 //Responds data for all movie tab
