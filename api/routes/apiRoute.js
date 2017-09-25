@@ -56,7 +56,7 @@ router.post("/watch-movie", function(req, res, next){
     var banner = req.body['banner']
     var final_data = {"err": null, "body": {"episodes": null, "content": null}}
 
-    if(banner){
+    if(banner == 'true'){
       db.getBannerMovie(movie_name, (err, doc) => {
         if(err){
           final_data.err = err
